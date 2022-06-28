@@ -1,7 +1,8 @@
-package com.salt.newsappsalt
+package com.salt.newsappsalt.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.salt.newsappsalt.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
