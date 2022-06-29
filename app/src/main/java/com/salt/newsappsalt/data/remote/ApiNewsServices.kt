@@ -9,6 +9,14 @@ interface ApiNewsServices {
     @GET("v2/top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String,
+        @Query("category") category: String,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int
+    ) : NewsResponse
+
+    @GET("v2/top-headlines")
+    suspend fun getBreakingNews(
+        @Query("country") country: String,
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
     ) : NewsResponse

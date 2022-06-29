@@ -8,10 +8,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class PagingNewsAdapter @Inject constructor(
+class PagingBreakingNewsAdapter @Inject constructor(
     private val apiNewsServices: ApiNewsServices,
     private val country: String,
-    private val category: String,
     private val pageSize: Int
 ) : PagingSource<Int, Article>() {
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
@@ -22,15 +21,11 @@ class PagingNewsAdapter @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         return try {
-            val page = params.key ?: 0
-            val response = apiNewsServices.getTopHeadlines(country, category, page, pageSize)
-            val nextKey =
-                if (response.articles.isNotEmpty()) page + 1
-                else null
+            val response = apiNewsServices.getBreakingNews(country, 0, pageSize)
             LoadResult.Page(
                 data = response.articles,
                 prevKey = null,
-                nextKey = nextKey
+                nextKey = null
             )
         } catch (io: IOException) {
             LoadResult.Error(io)

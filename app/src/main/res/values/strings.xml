@@ -2,4 +2,6 @@
     <string name="app_name">NewsAppSalt</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_breaking_news">image breaking news</string>
+    <string name="title_news">title news</string>
 </resources>

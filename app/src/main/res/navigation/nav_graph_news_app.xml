@@ -9,5 +9,14 @@
         android:id="@+id/fragmentTopHeadline"
         android:name="com.salt.newsappsalt.presentation.headline.FragmentTopHeadline"
         android:label="fragment_top_headline"
-        tools:layout="@layout/fragment_top_headline" />
+        tools:layout="@layout/fragment_top_headline" >
+        <action
+            android:id="@+id/action_fragmentTopHeadline_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.salt.newsappsalt.presentation.detail.NewsDetailFragment"
+        android:label="fragment_news_detail"
+        tools:layout="@layout/fragment_news_detail" />
 </navigation>

@@ -28,6 +28,9 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
     private val newsViewModels: NewsViewModels by viewModels()
 
     private lateinit var adapterNews: AdapterNews
+    private lateinit var adapterBreakingNews: AdapterBreakingNews
+
+    private var categories = ""
 
     override fun initBinding(
         inflater: LayoutInflater,
@@ -39,26 +42,75 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
     override fun initView() {
 
         adapterNews = AdapterNews(this)
+        adapterBreakingNews = AdapterBreakingNews(this)
         binding.apply {
+            rvListBreakingNews.adapter = adapterBreakingNews
+            rvListBreakingNews.layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false,
+            )
             rvListNews.adapter = adapterNews
             rvListNews.layoutManager = LinearLayoutManager(requireContext())
 
-        }
+            swipeRefresh.setOnRefreshListener {
+                jobCallData()
+            }
 
+        }
+        jobCallData()
+
+    }
+
+    private fun jobCallData() {
         var job: Job? = null
         job?.cancel()
         job = MainScope().launch {
             delay(1000)
-            getArticleList()
+            getBreakingNews()
+            getArticleCategoryList(categories)
         }
-        onDataLoading()
+        binding.swipeRefresh.isRefreshing = true
         job.isCompleted
-
     }
 
-    private fun getArticleList() {
+    private fun getBreakingNews() {
         lifecycleScope.launch {
-            newsViewModels.getTopHeadline("id", 10)
+            newsViewModels.getBreakingNews("id", 3)
+                .distinctUntilChanged()
+                .collectLatest {
+                    adapterBreakingNews.submitData(it)
+                }
+        }
+        adapterBreakingNews.addLoadStateListener { loadState ->
+            binding.apply {
+                when(loadState.source.refresh) {
+                    is LoadState.Loading -> {
+                        swipeRefresh.isRefreshing = true
+                        onDataLoading()
+                        Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+                        Log.e("TAG", "getReposList: loadingState")
+                    }
+                    is LoadState.NotLoading -> {
+                        swipeRefresh.isRefreshing = false
+                        onDataLoaded()
+                        Log.e("TAG", "getReposList: notLoadingState")
+
+                    }
+                    is LoadState.Error -> {
+                        swipeRefresh.isRefreshing = false
+                        onDataLoaded()
+                        Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
+                        Log.e("TAG", "getReposList: errorState")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getArticleCategoryList(category: String) {
+        lifecycleScope.launch {
+            newsViewModels.getTopHeadline("id", category,5)
                 .distinctUntilChanged()
                 .collectLatest {
                     adapterNews.submitData(it)
@@ -68,16 +120,19 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
             binding.apply {
                 when(loadState.source.refresh) {
                     is LoadState.Loading -> {
+                        swipeRefresh.isRefreshing = true
                         onDataLoading()
                         Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
                         Log.e("TAG", "getReposList: loadingState")
                     }
                     is LoadState.NotLoading -> {
+                        swipeRefresh.isRefreshing = false
                         onDataLoaded()
                         Log.e("TAG", "getReposList: notLoadingState")
 
                     }
                     is LoadState.Error -> {
+                        swipeRefresh.isRefreshing = false
                         onDataLoaded()
                         Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                         Log.e("TAG", "getReposList: errorState")
@@ -96,7 +151,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
         binding.pbLoad.visibility = View.VISIBLE
     }
 
-    override fun onClick(search: Article) {
+    override fun onClick(article: Article) {
 
     }
 

@@ -13,9 +13,13 @@ class NewsViewModels @Inject constructor(
     private val newsRepositoryImpl: NewsRepositoryImpl
 ) : ViewModel() {
 
-    fun getTopHeadline(country: String, pageSize: Int) =
-        newsRepositoryImpl.getTopHeadline(country, pageSize)
+    fun getTopHeadline(country: String, category: String, pageSize: Int) =
+        newsRepositoryImpl.getTopHeadline(country, category, pageSize)
             .map { pagingData -> pagingData.map { it } }
             .cachedIn(viewModelScope)
 
+    fun getBreakingNews(country: String, pageSize: Int) =
+        newsRepositoryImpl.getBreakingNews(country, pageSize)
+            .map { pagingData -> pagingData.map { it } }
+            .cachedIn(viewModelScope)
 }
