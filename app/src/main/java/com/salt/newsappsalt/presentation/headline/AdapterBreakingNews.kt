@@ -9,8 +9,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.salt.newsappsalt.R
 import com.salt.newsappsalt.data.remote.dto.Article
 import com.salt.newsappsalt.databinding.ItemListBreakingNewsBinding
-import com.salt.newsappsalt.databinding.ItemListNewsBinding
-import com.salt.newsappsalt.di.GlideModule
 import com.salt.newsappsalt.utils.ArticleClickListener
 import com.salt.newsappsalt.utils.DiffUtils.Companion.DIFF_UTIL_ARTICLE
 
@@ -20,17 +18,6 @@ class AdapterBreakingNews(
 
 
     inner class Holder(private val binding: ItemListBreakingNewsBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                val pos = bindingAdapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    val item = getItem(pos)
-                    if (item != null) {
-                        clickListener.onClick(item)
-                    }
-                }
-            }
-        }
         fun bind(data: Article) {
             with(binding) {
                 Glide.with(binding.root)
@@ -39,6 +26,10 @@ class AdapterBreakingNews(
                     .error(R.drawable.ic_round_warning_24)
                     .into(imgUrl)
                 tvTitleNews.text = data.title
+
+                root.setOnClickListener {
+                    clickListener.onClick(data)
+                }
             }
         }
     }

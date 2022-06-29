@@ -5,15 +5,26 @@
       <map>
         <entry key="app/src/main/res/drawable/bg_bs_filter.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/bg_bs_filter_dark.xml" value="0.205" />
+        <entry key="app/src/main/res/drawable/bg_bs_filter_light.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/bg_dark_top_radius_8.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.205" />
+        <entry key="app/src/main/res/drawable/bg_light_top_radius_8.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/bg_shadow.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/ic_entypo_social_facebook.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_fluent_share_24_filled.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_mdi_whatsapp.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_round_arrow_back_ios_new_24.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.163" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/fragment_bs_filter_category.xml" value="0.2622448885731332" />
-        <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.2967079948696024" />
+        <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.289453125" />
         <entry key="app/src/main/res/layout/fragment_top_headline.xml" value="0.2702009405728944" />
+        <entry key="app/src/main/res/layout/fragment_web_view.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/item_list_breaking_news.xml" value="0.32107738349722104" />
         <entry key="app/src/main/res/layout/item_list_news.xml" value="0.3789488043424257" />
         <entry key="app/src/main/res/layout/item_loading_rv.xml" value="0.2702009405728944" />
         <entry key="app/src/main/res/layout/item_news.xml" value="1.6277210780552456" />
+        <entry key="app/src/main/res/layout/item_share.xml" value="0.32916666666666666" />
       </map>
     </option>
   </component>

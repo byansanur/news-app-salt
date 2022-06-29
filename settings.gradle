@@ -3,19 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-    }
-    plugins{
-        id 'androidx.navigation'
-    }
-
-    resolutionStrategy {
-
-        eachPlugin {
-
-            if (requested.id.id == 'androidx.navigation') {
-                useModule("androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5")
-            }
-        }
+        maven { url "https://jitpack.io" }
     }
 }
 dependencyResolutionManagement {
@@ -23,6 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "NewsAppSalt"

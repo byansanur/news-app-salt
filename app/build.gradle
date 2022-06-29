@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -22,7 +22,8 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://newsapi.org/\"")
-            buildConfigField("String", "API_KEY", "\"d7d6b55f00224f808924fd1fab0e8a1d\"")
+            buildConfigField("String", "API_KEY", "\"53ce8238dc7c4b5bbe263b0166394267\"")
+//            buildConfigField("String", "API_KEY", "\"d95e4abc067e4b1a987a5518fa867ce0\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -61,6 +62,10 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.1")
+
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
 
     // scalable size unit
     implementation 'com.intuit.sdp:sdp-android:1.1.0'

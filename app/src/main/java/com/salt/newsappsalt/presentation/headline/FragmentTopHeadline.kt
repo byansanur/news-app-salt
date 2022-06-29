@@ -1,5 +1,6 @@
 package com.salt.newsappsalt.presentation.headline
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +8,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.salt.newsappsalt.R
 import com.salt.newsappsalt.base.BaseFragment
 import com.salt.newsappsalt.data.remote.dto.Article
 import com.salt.newsappsalt.databinding.FragmentTopHeadlineBinding
 import com.salt.newsappsalt.presentation.view_model.NewsViewModels
 import com.salt.newsappsalt.utils.ArticleClickListener
 import com.salt.newsappsalt.utils.CATEGORY_ENTERTAINMENT
-import com.salt.newsappsalt.utils.CATEGORY_GENERAL
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -25,6 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import java.util.*
 
 @AndroidEntryPoint
@@ -69,18 +72,28 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
             }
 
 
-            findNavController().currentBackStackEntry
-                ?.savedStateHandle
-                ?.getLiveData<String>("category")
-                ?.observe(viewLifecycleOwner) {
-                    categories = it
-                    tvGetCategory.text = categories
-                    getArticleCategoryList(categories.lowercase(Locale.getDefault()))
+            findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+                if (controller.currentBackStackEntry?.savedStateHandle != null) {
+                    controller.currentBackStackEntry
+                        ?.savedStateHandle
+                        ?.getLiveData<String>("category")
+                        ?.observe(viewLifecycleOwner) {
+                            categories = it
+                            tvGetCategory.text = categories
+                            getArticleCategoryList(categories.lowercase(Locale.getDefault()))
+                        }
                 }
+            }
+
 
         }
         jobCallData()
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("category", categories)
     }
 
     private fun jobCallData() {
@@ -121,7 +134,9 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
                     is LoadState.Error -> {
                         swipeRefresh.isRefreshing = false
                         onDataLoaded()
-                        Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "error", Toast
+                            .LENGTH_SHORT)
+                            .show()
                         Log.e("TAG", "getReposList: errorState")
                     }
                 }
@@ -131,7 +146,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
 
     private fun getArticleCategoryList(category: String) {
         lifecycleScope.launch {
-            newsViewModels.getTopHeadline("id", category,10)
+            newsViewModels.getTopHeadline("id", category,40)
                 .distinctUntilChanged()
                 .collectLatest {
                     adapterNews.submitData(it)
@@ -172,9 +187,19 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
         binding.pbLoad.visibility = View.VISIBLE
     }
 
-    override fun onClick(article: Article) {
-        val nav = FragmentTopHeadlineDirections.actionFragmentTopHeadlineToNewsDetailFragment(article)
-        findNavController().navigate(nav)
+    override fun onClick(article: Article?) {
+        try {
+            if (article != null) {
+                findNavController().navigate(
+                    FragmentTopHeadlineDirections.actionFragmentTopHeadlineToNewsDetailFragment(article)
+                )
+            } else {
+                Toast.makeText(requireContext(), "null", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
+        }
+
     }
 
 
