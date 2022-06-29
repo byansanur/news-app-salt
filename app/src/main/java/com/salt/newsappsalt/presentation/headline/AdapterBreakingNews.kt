@@ -35,7 +35,6 @@ class AdapterBreakingNews(
             with(binding) {
                 Glide.with(binding.root)
                     .load(data.urlToImage)
-                    .centerInside()
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_round_warning_24)
                     .into(imgUrl)

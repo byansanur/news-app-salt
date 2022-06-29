@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_290sdp"
+    android:layout_width="@dimen/_270sdp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/_4sdp"
     app:cardCornerRadius="@dimen/_6sdp"
@@ -29,9 +29,7 @@
             android:layout_height="wrap_content"
             tools:text="Placeholder"
             android:background="@drawable/bg_grey"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif"
+            style="@style/customTitleTextColor"
             android:textSize="17sp"
             android:maxLines="1"
             android:ellipsize="end"

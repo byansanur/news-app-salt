@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_bs_filter.xml" value="0.205" />
+        <entry key="app/src/main/res/drawable/bg_bs_filter_dark.xml" value="0.205" />
         <entry key="app/src/main/res/drawable/bg_grey.xml" value="0.205" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.32916666666666666" />
+        <entry key="app/src/main/res/layout/fragment_bs_filter_category.xml" value="0.2622448885731332" />
         <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.2967079948696024" />
         <entry key="app/src/main/res/layout/fragment_top_headline.xml" value="0.2702009405728944" />
         <entry key="app/src/main/res/layout/item_list_breaking_news.xml" value="0.32107738349722104" />

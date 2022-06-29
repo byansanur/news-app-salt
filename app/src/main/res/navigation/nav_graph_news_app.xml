@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_fragmentTopHeadline_to_newsDetailFragment"
             app:destination="@id/newsDetailFragment" />
+        <action
+            android:id="@+id/action_fragmentTopHeadline_to_bsFilterCategoryFragment"
+            app:destination="@id/bsFilterCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailFragment"
         android:name="com.salt.newsappsalt.presentation.detail.NewsDetailFragment"
         android:label="fragment_news_detail"
-        tools:layout="@layout/fragment_news_detail" />
+        tools:layout="@layout/fragment_news_detail" >
+        <argument
+            android:name="details"
+            app:argType="com.salt.newsappsalt.data.remote.dto.Article" />
+    </fragment>
+    <dialog
+        android:id="@+id/bsFilterCategoryFragment"
+        android:name="com.salt.newsappsalt.presentation.filter.BsFilterCategoryFragment"
+        android:label="fragment_bs_filter_category"
+        tools:layout="@layout/fragment_bs_filter_category" />
 </navigation>

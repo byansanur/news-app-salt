@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.salt.newsappsalt.base.BaseFragment
@@ -14,6 +16,8 @@ import com.salt.newsappsalt.data.remote.dto.Article
 import com.salt.newsappsalt.databinding.FragmentTopHeadlineBinding
 import com.salt.newsappsalt.presentation.view_model.NewsViewModels
 import com.salt.newsappsalt.utils.ArticleClickListener
+import com.salt.newsappsalt.utils.CATEGORY_ENTERTAINMENT
+import com.salt.newsappsalt.utils.CATEGORY_GENERAL
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -21,6 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleClickListener {
@@ -43,6 +48,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
 
         adapterNews = AdapterNews(this)
         adapterBreakingNews = AdapterBreakingNews(this)
+        categories = CATEGORY_ENTERTAINMENT
         binding.apply {
             rvListBreakingNews.adapter = adapterBreakingNews
             rvListBreakingNews.layoutManager = LinearLayoutManager(
@@ -53,9 +59,24 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
             rvListNews.adapter = adapterNews
             rvListNews.layoutManager = LinearLayoutManager(requireContext())
 
+            tvFilter.setOnClickListener {
+                val nav = FragmentTopHeadlineDirections.actionFragmentTopHeadlineToBsFilterCategoryFragment()
+                findNavController().navigate(nav)
+            }
+
             swipeRefresh.setOnRefreshListener {
                 jobCallData()
             }
+
+
+            findNavController().currentBackStackEntry
+                ?.savedStateHandle
+                ?.getLiveData<String>("category")
+                ?.observe(viewLifecycleOwner) {
+                    categories = it
+                    tvGetCategory.text = categories
+                    getArticleCategoryList(categories.lowercase(Locale.getDefault()))
+                }
 
         }
         jobCallData()
@@ -68,7 +89,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
         job = MainScope().launch {
             delay(1000)
             getBreakingNews()
-            getArticleCategoryList(categories)
+            getArticleCategoryList("")
         }
         binding.swipeRefresh.isRefreshing = true
         job.isCompleted
@@ -110,7 +131,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
 
     private fun getArticleCategoryList(category: String) {
         lifecycleScope.launch {
-            newsViewModels.getTopHeadline("id", category,5)
+            newsViewModels.getTopHeadline("id", category,10)
                 .distinctUntilChanged()
                 .collectLatest {
                     adapterNews.submitData(it)
@@ -152,7 +173,8 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
     }
 
     override fun onClick(article: Article) {
-
+        val nav = FragmentTopHeadlineDirections.actionFragmentTopHeadlineToNewsDetailFragment(article)
+        findNavController().navigate(nav)
     }
 
 

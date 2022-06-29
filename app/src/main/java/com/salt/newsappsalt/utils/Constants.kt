@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit
 const val BASE_URL = BuildConfig.BASE_URL
 const val API_KEY = BuildConfig.API_KEY
 
-const val CATEGORY_BUSINESS = "business"
-const val CATEGORY_ENTERTAINMENT = "entertainment"
-const val CATEGORY_GENERAL = "general"
-const val CATEGORY_HEALTH = "health"
-const val CATEGORY_SCIENCE = "science"
-const val CATEGORY_SPORTS = "sports"
-const val CATEGORY_TECHNOLOGY = "technology"
+const val CATEGORY_BUSINESS = "Business"
+const val CATEGORY_ENTERTAINMENT = "Entertainment"
+const val CATEGORY_GENERAL = "General"
+const val CATEGORY_HEALTH = "Health"
+const val CATEGORY_SCIENCE = "Science"
+const val CATEGORY_SPORTS = "Sports"
+const val CATEGORY_TECHNOLOGY = "Technology"
 
 fun convertDateTime(dateTime: String?) : String? {
     var convTime: String? = null
