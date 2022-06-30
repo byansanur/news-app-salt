@@ -21,20 +21,9 @@ class AdapterNews(
 
 
     inner class Holder(private val binding: ItemListNewsBinding) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.root.setOnClickListener {
-                val pos = bindingAdapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    val item = getItem(pos)
-                    if (item != null) {
-                        clickListener.onClick(item)
-                    }
-                }
-            }
-        }
         fun bind(data: Article) {
             with(binding) {
-                Glide.with(binding.root)
+                Glide.with(binding.root.context)
                     .load(data.urlToImage)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(RequestOptions().transform(RoundedCorners(16)))
@@ -43,6 +32,10 @@ class AdapterNews(
                 tvTittleNews.text = data.title
                 tvDescriptionNews.text = data.description
                 tvPublishedAt.text = convertDateTime(data.publishedAt)
+
+                root.setOnClickListener {
+                    clickListener.onClick(data)
+                }
             }
         }
     }

@@ -1,18 +1,9 @@
 package com.salt.newsappsalt.presentation.detail
 
 import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.webkit.JsResult
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.navigation.fragment.navArgs
-import com.salt.newsappsalt.R
 import com.salt.newsappsalt.base.BaseFragment
 import com.salt.newsappsalt.databinding.FragmentWebViewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,14 +16,14 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
     override fun initBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentWebViewBinding {
+    ): FragmentWebViewBinding? {
         return FragmentWebViewBinding.inflate(inflater, container, false)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView() {
 
-        binding.apply {
+        binding?.apply {
 //            webView.setListener(activity, this)
             webView.setMixedContentAllowed(true)
 
@@ -67,11 +58,11 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
 
     override fun onResume() {
         super.onResume()
-        binding.webView.onResume()
+        binding?.webView?.onResume()
     }
 
-    override fun onDestroy() {
-        binding.webView.onDestroy()
-        super.onDestroy()
-    }
+//    override fun onDestroy() {
+//        binding?.webView?.onDestroy()
+//        super.onDestroy()
+//    }
 }

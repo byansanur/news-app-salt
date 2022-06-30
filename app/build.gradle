@@ -73,18 +73,10 @@ dependencies {
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    //hilt
     // Hilt dependencies
     def hilt_version = '2.41'
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-//    implementation 'com.google.dagger:hilt-android:2.38.1'
-//    kapt 'com.google.dagger:hilt-compiler:2.41'
-//    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.37'
-//    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.41'
-//    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
-//    //noinspection GradleDependency
-//    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
 
     //paging
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
@@ -111,7 +103,8 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     //Rx
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'

@@ -20,7 +20,7 @@ class AdapterBreakingNews(
     inner class Holder(private val binding: ItemListBreakingNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Article) {
             with(binding) {
-                Glide.with(binding.root)
+                Glide.with(binding.root.context)
                     .load(data.urlToImage)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .error(R.drawable.ic_round_warning_24)

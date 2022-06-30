@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.salt.newsappsalt.R
 import com.salt.newsappsalt.base.BaseFragment
 import com.salt.newsappsalt.data.remote.dto.Article
 import com.salt.newsappsalt.databinding.FragmentTopHeadlineBinding
@@ -52,7 +49,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
         adapterNews = AdapterNews(this)
         adapterBreakingNews = AdapterBreakingNews(this)
         categories = CATEGORY_ENTERTAINMENT
-        binding.apply {
+        binding?.apply {
             rvListBreakingNews.adapter = adapterBreakingNews
             rvListBreakingNews.layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -104,7 +101,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
             getBreakingNews()
             getArticleCategoryList("")
         }
-        binding.swipeRefresh.isRefreshing = true
+        binding?.swipeRefresh?.isRefreshing = true
         job.isCompleted
     }
 
@@ -117,7 +114,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
                 }
         }
         adapterBreakingNews.addLoadStateListener { loadState ->
-            binding.apply {
+            binding?.apply {
                 when(loadState.source.refresh) {
                     is LoadState.Loading -> {
                         swipeRefresh.isRefreshing = true
@@ -153,7 +150,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
                 }
         }
         adapterNews.addLoadStateListener { loadState ->
-            binding.apply {
+            binding?.apply {
                 when(loadState.source.refresh) {
                     is LoadState.Loading -> {
                         swipeRefresh.isRefreshing = true
@@ -180,11 +177,11 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
     }
 
     private fun onDataLoaded() {
-        binding.pbLoad.visibility = View.INVISIBLE
+        binding?.pbLoad?.visibility = View.INVISIBLE
     }
 
     private fun onDataLoading() {
-        binding.pbLoad.visibility = View.VISIBLE
+        binding?.pbLoad?.visibility = View.VISIBLE
     }
 
     override fun onClick(article: Article?) {
@@ -196,7 +193,7 @@ class FragmentTopHeadline : BaseFragment<FragmentTopHeadlineBinding>(), ArticleC
             } else {
                 Toast.makeText(requireContext(), "null", Toast.LENGTH_SHORT).show()
             }
-        } catch (e: NullPointerException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
