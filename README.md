@@ -1,5 +1,5 @@
 # news-app-salt
-NewsAppSalt has created for Technical Test in Function: Mobile Developer at Salt
+NewsAppSalt is created for Technical Test in Function: Mobile Developer at Salt
 
 # Preview App
 ![Alt text](/screenshoot/screen1.jpeg?raw=true "List news screen")
